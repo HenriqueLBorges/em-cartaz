@@ -2,9 +2,6 @@ var config = require("../config");
 var bodyParser = require("body-parser");
 var request = require('request');
 var cheerio = require('cheerio');
-var YouTube = require('youtube-node');
-var youTube = new YouTube();
-youTube.setKey(config.getYoutubeKey());
 
 module.exports = function (app) {
     app.use(bodyParser.json());
