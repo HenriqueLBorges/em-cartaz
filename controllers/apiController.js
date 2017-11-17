@@ -36,11 +36,11 @@ function getMovies(res) {
 
                     trailer = divCard.children("div.meta-more").children().eq(2).attr("href");
                     programacao = divCard.children("div.meta-more").children().eq(3).attr("href");
-                    if(typeof trailer !== "undefined"){
+                    if (typeof trailer !== "undefined") {
                         index = trailer.indexOf("file://");
                         trailer = trailer.substring(index);
                     }
-                    if(typeof programacao !== "undefined"){
+                    if (typeof programacao !== "undefined") {
                         index = programacao.indexOf("file://");
                         programacao = programacao.substring(index);
                     }
@@ -59,21 +59,22 @@ function getMovies(res) {
                     divCard.children("div.meta").children("div.meta-body").children().eq(2).children().each(function (j, elem1) {
                         elenco.push($(this).text());
                     });
-
-                    filmes.push(
-                        {
-                            titulo: titulo,
-                            diretor: diretor,
-                            lancamento: lancamento,
-                            genero: genero,
-                            imagem: imagem,
-                            trailer: trailer,
-                            programacao: programacao,
-                            nota: nota,
-                            sinopse: sinopse,
-                            elenco: elenco
-                        }
-                    );
+                    if (titulo !== "") {
+                        filmes.push(
+                            {
+                                titulo: titulo,
+                                diretor: diretor,
+                                lancamento: lancamento,
+                                genero: genero,
+                                imagem: imagem,
+                                trailer: trailer,
+                                programacao: programacao,
+                                nota: nota,
+                                sinopse: sinopse,
+                                elenco: elenco
+                            }
+                        );
+                    }
                     genero = [];
                     elenco = [];
                 });
