@@ -89,5 +89,4 @@ function getMovies(res) {
             })
         });
     });
-    return promise;
 }
