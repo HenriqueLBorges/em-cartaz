@@ -2,6 +2,7 @@ var config = require("../config");
 var bodyParser = require("body-parser");
 var request = require('request');
 var cheerio = require('cheerio');
+const GoogleImages = require('google-images');
 
 module.exports = function (app) {
     app.use(bodyParser.json());
@@ -33,7 +34,6 @@ function getMovies(res) {
                     diretor = divCard.children("div.meta").children("div.meta-body").children().eq(1).children().first().text();
                     lancamento = divCard.children("div.meta").children("div.meta-body").children("div.meta-body-item").children().first().text();
                     imagem = divCard.children().first().children().first().children().first().attr("src");
-
                     trailer = divCard.children("div.meta-more").children().eq(2).attr("href");
                     programacao = divCard.children("div.meta-more").children().eq(3).attr("href");
                     if (typeof trailer !== "undefined") {
@@ -48,8 +48,13 @@ function getMovies(res) {
                     programacao = "http://www.adorocinema.com" + programacao
 
                     nota = divCard.children("div.meta-more").children().eq(1).children().first().children().eq(1).text();
-                    sinopse = divCard.children("div.meta-more").children().first().text();
+                    //Removes \n from the string
+                    nota = nota.substring(17, nota.length);
 
+                    sinopse = divCard.children("div.meta-more").children().first().text();
+                    //Removes all spaces and \n from the string
+                    sinopse = sinopse.substring(21, sinopse.length);
+                    sinopse = sinopse.substring(0, sinopse.indexOf("\n"));
 
                     divCard.children("div.meta").children("div.meta-body").children().first().children().each(function (j, elem1) {
                         if (j > 2)
@@ -59,6 +64,22 @@ function getMovies(res) {
                     divCard.children("div.meta").children("div.meta-body").children().eq(2).children().each(function (j, elem1) {
                         elenco.push($(this).text());
                     });
+
+                    google(titulo, function (err, res) {
+                        if (err) console.error(err)
+
+                        for (var i = 0; i < res.links.length; ++i) {
+                            var link = res.links[i];
+                            console.log(link.title + ' - ' + link.href)
+                            console.log(link.description + "\n")
+                        }
+
+                        if (nextCounter < 4) {
+                            nextCounter += 1
+                            if (res.next) res.next()
+                        }
+                    })
+
                     if (titulo !== "") {
                         filmes.push(
                             {
