@@ -2,7 +2,6 @@ var config = require("../config");
 var bodyParser = require("body-parser");
 var request = require('request');
 var cheerio = require('cheerio');
-const GoogleImages = require('google-images');
 
 module.exports = function (app) {
     app.use(bodyParser.json());
@@ -28,6 +27,7 @@ function getMovies(res) {
                 var index;
 
                 $('li.hred').each(function (i, elem) {
+                    //Class = "card card-entity card-entity-list cf"
                     var divCard = $(this).children().first();
 
                     titulo = divCard.children("div.meta").children().first().children().first().text();
