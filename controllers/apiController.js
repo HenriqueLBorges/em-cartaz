@@ -33,7 +33,7 @@ function getMovies(res) {
                     titulo = divCard.children("div.meta").children().first().children().first().text();
                     diretor = divCard.children("div.meta").children("div.meta-body").children().eq(1).children().first().text();
                     lancamento = divCard.children("div.meta").children("div.meta-body").children("div.meta-body-item").children().first().text();
-                    imagem = divCard.children().first().children().first().children().first().attr("src");
+                    imagem = divCard.children().first().children().first().children().first().attr("data-src");
                     trailer = divCard.children("div.meta-more").children().eq(2).attr("href");
                     programacao = divCard.children("div.meta-more").children().eq(3).attr("href");
                     if (typeof trailer !== "undefined") {
